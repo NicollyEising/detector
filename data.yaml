@@ -1,0 +1,11 @@
+runtime: python39  # ou outro runtime, dependendo da sua aplicação
+
+entrypoint: gunicorn -b :$PORT app:app  # Altere "app" para o nome do seu arquivo, se necessário
+
+instance_class: F2  # Tamanho da instância, você pode ajustar conforme necessário
+
+handlers:
+- url: /static
+  static_dir: static/
+- url: /
+  script: auto
