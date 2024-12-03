@@ -1,0 +1,53 @@
+import paho.mqtt.client as mqtt
+
+
+class MqttHandler:
+    """Classe responsável por gerenciar a conexão MQTT e envio de dados para o Blynk."""    
+    def __init__(self, config, video_processor, data_queue):
+        """Inicializa o cliente MQTT com as configurações fornecidas."""
+        try:
+            self.blynk_auth_token = config["blynk_auth_token"]
+            self.broker = config["broker"]
+            self.port = config["port"]
+            self.client = mqtt.Client()
+            self.client.username_pw_set(config["mqtt_username"], self.blynk_auth_token)
+            self.client.on_connect = self.on_connect
+            self.client.tls_set()
+            self.client.connect(self.broker, self.port, 60)
+            self.video_processor = video_processor
+            self.data_queue = data_queue
+        except Exception as e:
+            print(f"Erro na inicialização do MQTT: {e}")
+
+    def on_connect(self, client, userdata, flags, rc):
+        """Callback executado quando a conexão MQTT é estabelecida."""
+        if rc == 0:
+            print("Conectado ao Blynk com sucesso!")
+        else:
+            print(f"Falha na conexão com o código {rc}")
+
+    def send_to_blynk(self):
+        """Envia os dados de contagem de pessoas para o Blynk."""
+        try:
+            count_left = self.video_processor.count_left
+            count_right = self.video_processor.count_right
+            self.client.publish("ds/esquerda", str(count_left))
+            self.client.publish("ds/direita", str(count_right))
+        except Exception as e:
+            print(f"Erro ao enviar dados para o Blynk: {e}")
+
+    def process_mqtt(self):
+        """Processa a fila de dados e mantém a conexão MQTT ativa."""
+        while True:
+            try:
+                if not self.data_queue.empty():
+                    # Obtém dados da fila
+                    count_left, count_right = self.data_queue.get()
+
+                    # Envia os dados para o Blynk
+                    self.send_to_blynk()
+
+                self.client.loop()
+            except Exception as e:
+                print(f"Erro no processamento MQTT: {e}")
+                break  # Finaliza o loop em caso de erro

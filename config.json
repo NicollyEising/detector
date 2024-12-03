@@ -1,0 +1,12 @@
+{
+    "video_source": "video.mp4",
+    "yolo_cfg": "C:/javaConteudo/DetectorDePessoas/n3_iot/pytorch-YOLOv4/cfg/yolov4.cfg",
+    "yolo_weights": "C:/javaConteudo/DetectorDePessoas/n3_iot/pytorch-YOLOv4/cfg/yolov4.weights",
+    "names_path": "C:/javaConteudo/DetectorDePessoas/n3_iot/coco.names",
+    "blynk_auth_token": "N8jEZTMvcR_bwGyrEvkh188DdHyeimZQ",
+    "broker": "blynk.cloud",
+    "port": 8883,
+    "mqtt_username": "device",
+    "mqtt_topic_left": "ds/esquerda",
+    "mqtt_topic_right": "ds/direita"
+}
