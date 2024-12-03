@@ -66,11 +66,6 @@ Isso iniciará o processamento de vídeo e a detecção de passageiros, além de
 - O script exibirá um vídeo com as pessoas detectadas e contadas, mostrando a quantidade de passageiros entrando e saindo do ônibus.
 - As contagens de passageiros serão enviadas para a plataforma IoT via MQTT.
 
-# Possíveis Melhorias
-
-- Implementar um sistema de calibração para lidar com diferentes condições de iluminação dentro do ônibus.
-- Melhorar a precisão da contagem com um sistema de rastreamento de objetos mais robusto.
-- Otimizar o desempenho para rodar eficientemente em dispositivos como Raspberry Pi.
 
 Esse formato inclui todos os detalhes necessários sobre configuração, execução e descrição do código, tornando a documentação clara e fácil de seguir.
 
